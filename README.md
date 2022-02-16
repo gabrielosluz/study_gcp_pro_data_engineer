@@ -265,8 +265,136 @@ Source: [Dan Sullivan course on Udemy](https://www.udemy.com/course/google-cloud
       - Too many concurrent modifications.
       - Exceeds resource limits.
       - Internal error.
-  
 
+###### **NoSQL Databases: Big Table**
+
+- Wide column database.
+  - Relational databases build on the table abstraction.
+  - Document database build on hierarchical key-value pairs.
+  - Wide column database build on the sparse multidimensional array.
+
+- Use cases of Wide Column databases:
+  -  Petabyte scale data.
+  - Low latency writes.
+  - Key based reads.
+  - Analytics.
+  - Time series applications: IoT, Finance, Monitoring.
+  - Open source wide columns databases: HBase (Hadoop), Cassandra.
+
+- Big Table:
+  - Managed service.
+  - Specify cluster config: number of nodes, SSD or HDD, Region/Zone.
+  - Scales linearly.
+  - Multi-region high availability with cluster replication.
+  - HBase API.
+
+- Row key:
+  - Unique identifier for a row of data stored in big table.
+  - Analogous to a primary key in relational databases.
+  - But...
+    - Bigtable does not support joins, so no concept of foreign keys.
+    - Rows keys determine where data is writen.
+  - Need to consider how structure of row-key affects performance.
+  - Row key and data location:
+    - Big Table writes data to multiple serves (nodes).
+    - Each node handles a subset of workload.
+    - Within nodes there are multiple sorted-string tables (SSTables).
+    - Data is sharded into blocks of contiguous rows, called tablets.
+    - Tablets are stored in Colossus file system.
+    - IMPORTANT:
+      - Data is never stored on a node.
+      - Only metadata stored on node.
+      - Data stored in Colossus.
+  - Designing Row keys.
+    - Row keys determine node and SSTable where data is written.
+    - Ideally, reads and writes distributed evenly across nodes.
+    - Need row key evenly distributed across nodes.
+    - Avoid:
+      - Linearly incrementing row keys.
+      - Low cardinality.
+
+- Query Patterns and Denormalization:
+  - Each table has one index based on row key.
+  - Rows are sorted by row-key.
+  - Columns are grouped into families.
+  - All operations are atomic at the row level.
+  - Related entities should be stored in adjacent rows to improve read efficiency.
+  - Empty columns do not take any space.
+  - Column Families:
+    - Set of related columns in a table.
+    - Frequently access together:
+      - Street address, city, state, country.
+      - Product name, type, size. 
+    - Supports up to 100 columns families efficiently.
+  - Tables:
+    - Limit of 1000 tables per instance.
+    - Better store data in one table than many.
+    - Small tables problematic.
+      - Sending requests to many tables increases connection overhead and latency.
+      - More dificult to load balance. 
+
+- Time Series data. 
+  - Data that includes a time and measurements.
+  - Basic design patterns:
+    - Row and time buckets.
+      - New columns for new events.
+      - New rows for new events.  
+    - Rows represent sigle events.
+      - Serialized column data.
+      - Unserialized column data. 
+    - Row with time buckets: 
+      - Each row represents a bucket of time such as an hour or day.
+      - Row key includes non-timestamp identifier such as 'hour123'.
+      - Row size limited to 100 MB, upper limit on size of buckets. 
+      - Advantages:
+        - Better read and write performance than row per event.
+        - Compression more efficient. 
+      - Disadvantage: more complex application code. 
+    - Row with time buckets - Column per Event:
+      - Write new column for each event.  
+      - Value stored in column qualifier/name rather than in cell.
+      - Send column family, column qualifier, timestamp.
+      - Row store the vallues for one metric.
+      - Use this pattern when:
+         - Do not need to measure changes in time series.
+         - Save storage space by using column qualifiers as data.  
+    - Row with time buckets - Cell per Event:
+      - Write new cell for each event.
+      - Save multiple timestamped events in a single column of a row.
+      - Each row contains all metrics of an event.
+      - Use whe you want to measure chanes in measurements over time. 
+    - Single Timestamp Rows - Serialized:
+      - Write new row for each event.
+      - Row key uses timestamp value as suffix. 
+      - Known as 'Tall and Narrow' pattern.
+      - Values stored in serialized format such as probufs. 
+      - Advantage:
+        - Storage efficiency.
+        - Speed.
+      - Disadvantages:
+        - Can not retrieve a single column.
+        - Need to deserialize data in application.
+      - Use when:
+        - Query patterns fluxuate.
+        - Cost concerns. 
+        - Events may exceed 100 MB otherwise.
+    - Single Timestamp Rows - UnSerialized:
+      - Store events in a new row.
+      - Do not serialize de data.
+      - Advantages: Easier ti implement than time buckets pattern.
+      - Disadvantages:
+        - Less performant.
+        - Not as efficiently compressed. 
+        - Potencial for hotspotting. 
+      - Use when:
+        - Retrieve all columns for a time range.
+        - Do not want to serialize.
+
+- Others considerations:
+  - Store data in multiple tables with different row keys if needed for different query patterns. 
+  - Combine features of different patterns, such as serializing data in time buckets. 
+
+  
 #### **Instance Store**
 
 - Persistent Disk
