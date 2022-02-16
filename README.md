@@ -155,7 +155,38 @@ Source: [Dan Sullivan course on Udemy](https://www.udemy.com/course/google-cloud
     - MySQL
     - SQL Server
 
-  
+###### **Relational Databases: Cloud Spanner**
+
+- When to use Cloud Spanner:
+  - Structured data.
+  - Predefined schema.
+  - Data structures.
+  - ACID transactions.
+  - Strong consistancy.
+  - Globally distributed (multi-region).
+  - High available.
+  - Up to 2 TB per node.
+  - Managed:
+    - Automatic replication.
+    - No planned downtime.
+  - Hot Spotting:
+    - Hot spots occour when many read and write ops happen on the same node.
+    - Can happen with sequential primary key:
+      - Auto-increment values.
+      - Timestamps.
+    - Consider using:
+      - Hash value of primary.
+      - Bit reverse sequential values. 
+      - Promote high cardinality attributes in multi-attribute primary key.
+  - Intervealed Tables:
+    - Parent-child relationship.
+      - Order to order line.
+      - Person to addresses. 
+    - Row from parent table stored with rows from child table.
+    - More efficient when retriving data from both.
+
+
+
 #### **Instance Store**
 
 - Persistent Disk
