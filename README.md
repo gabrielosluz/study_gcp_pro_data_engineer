@@ -185,7 +185,87 @@ Source: [Dan Sullivan course on Udemy](https://www.udemy.com/course/google-cloud
     - Row from parent table stored with rows from child table.
     - More efficient when retriving data from both.
 
+###### **NoSQL Databases: Cloud Firestore**
 
+- Cloud Firestore (datastore) and Document databases:
+  - Managed NoSQL database.
+  - Uses the document model:
+    - Key-value pairs.
+    - Hierarchical.
+  - Two modes:
+    - Native mode.
+    - Datastore mode.
+
+- When to use Document Databases:
+  - Semi-structured data.
+    - Schema is not fixed.
+    - May change over time.
+    - Different attributes across entities.
+    - Query on multiple attributes. 
+    - Bounded ingestion volumes.
+
+- Choosing a mode:
+  - Datastore mode:
+    - Backend for server applications.
+    - Does not require synching with mobile device.
+  - Native mode:
+    - Used with mobile & web applications.
+    - Supports large number of connections.
+    - Mobile and web clients. 
+
+- Entities:
+  - Entities describes or represent a thing.
+  - A single entity is analogous to a row in a relational table.
+  - A set of entities with similar attributes is somewhat analogous to a table in a relational database. 
+  - Entities have properties.
+  - Related entities knows as Kinds.
+  - Similar to json struct.
+  - Atomic values:
+    - Integers.
+    - Floating points numbers.
+    - Strings. 
+    - Dates.
+  - Arrays.
+  - Entities.
+
+- Index
+  - Indexes rerquired for all queries.
+  - no scanning.
+  - Two types:
+    - Single field.
+    - Composite.
+  - Automatically create some index.
+    - Atomic values, ascending and descending.
+    - Maps and arrays also.
+  - Composite Indeex:
+    - Index with multiple fields.
+    - Not automatically created. 
+    - Used when querying and filtering using multiple attribute
+  - Limitaions:
+    - Queries with range filters on different fields are not supported.
+    - Some limits on OR queries.
+
+- Transactions:
+  - Set of one or more operations on one or more entities.
+  - Guaranteed to be atomic.
+    - Never partially applied.
+    - All operations succeed or fail.
+  - Optional for database operations.
+  - Serializable operations:
+    - Data read by a transaction cannot be concurrently modified.
+    - Transaction sees consistent snapshot of the database.
+    - Writes within a transaction not available to remaining operations in transaction.
+    - When no writes in a transaction, use read-only transacion to improve performance. 
+  - Limitations:
+    - Time:
+      - Maximum duration of 60 seconds.
+      - 10 seconds idle expiration after 30 seconds.
+    - Modify up to 500 entities in a single transaction.
+    - Transactions can fail due to:
+      - Too many concurrent modifications.
+      - Exceeds resource limits.
+      - Internal error.
+  
 
 #### **Instance Store**
 
