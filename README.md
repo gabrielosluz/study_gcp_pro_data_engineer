@@ -111,14 +111,52 @@ Source: [Dan Sullivan course on Udemy](https://www.udemy.com/course/google-cloud
     - Is live.
     - Matches Storage Class.
     - Number of newer versions.
-         
-
-#### **Instance Store**
-
-- Persistent Disk
 
 #### **Database Storage**
 
 - SQL
 - NoSQL
-- Analytic
+- Analytical
+
+###### **Relational Databases: Cloud SQL**
+- When to use Relational Databases:
+  - Structured data.
+  - Predefined schema.
+  - Data structures:
+    - Tables
+    - Index
+    - Views
+    - Constraints
+    - Partitions
+  - ACID transactions.
+  - Strong consistancy.
+
+- Defining databases:
+  - SQL (Structed Query Language).
+  - DDL (Data Definition Language), DML (Data Manipulation Language) etc.
+  - Tables store data.
+  - Index can improve access time.
+  - Partitions shard data.
+
+- When not to use Relational Databases:
+  - Data warehousing - analytical.
+  - Unstructured data - Object storage.
+  - Semi-structured data - Document or Wide-Column.
+  - High volume, low latency writes - Wide-Column.
+
+- When to use Cloud SQL:
+  - Geography:
+    - Regional data store.
+    - Multiple zones for high availability.
+    - Multi-region for backups only.
+  - Up to 30 TB per database.
+  - Using one of:
+    - PostgreSQL
+    - MySQL
+    - SQL Server
+
+  
+#### **Instance Store**
+
+- Persistent Disk
+
