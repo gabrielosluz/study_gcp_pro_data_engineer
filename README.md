@@ -495,3 +495,20 @@ Source: [Dan Sullivan course on Udemy](https://www.udemy.com/course/google-cloud
 
 - Persistent Disk
 
+###### **Migrating a Data Warehouse**
+
+Read: https://cloud.google.com/architecture/dw2bq/dw-bq-migration-overview
+
+###### **Caching Data and Cloud Memorystore**
+
+- Cloud Memorystore:
+  - Managed Redis and Memcached.
+  - Caching data.
+  - Basic Tier:
+    - Cahe with no replication. 
+    - No cross zone replication.
+    - No automatic failover.
+  - Standar Tier:
+    - Cache with replication.
+    - Cross zone replication.
+    - Automatic failover.
