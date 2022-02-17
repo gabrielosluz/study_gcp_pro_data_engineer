@@ -512,3 +512,23 @@ Read: https://cloud.google.com/architecture/dw2bq/dw-bq-migration-overview
     - Cache with replication.
     - Cross zone replication.
     - Automatic failover.
+
+###### **Workflow and ETL/ELT**
+
+- Cloud Composer:
+  - Airflow managed service. 
+  - Execute workflows in term os DAGS. 
+  - Console or cli. 
+  - Workflow: collection of tasks. 
+  - DAGS are stored in Cloud Stored. 
+  - Log associate with sigle DAG task.
+
+- Cloud Data  Fusion:
+  - Managed service based on open source project CDAP. 
+  - Code-free ETL/ELT tool.
+  - Grag and drop ETL tool. 
+  - Cloud Data Instance deployed as an instance. 
+  - Two editions:
+    - Basic.
+    - Enterprese. 
+    
