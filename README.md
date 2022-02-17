@@ -394,7 +394,103 @@ Source: [Dan Sullivan course on Udemy](https://www.udemy.com/course/google-cloud
   - Store data in multiple tables with different row keys if needed for different query patterns. 
   - Combine features of different patterns, such as serializing data in time buckets. 
 
-  
+###### **Analytical Databases: Big Query Data Management**
+
+- Serveless data warehouse.
+- Petabyte scale.
+- Uses SQL but is not a relational database. 
+- Analytical database.
+- Other features: BQ ML, BQ BI Engine, BQ GIS.
+- Datasets and tables: 
+  - Dataset: 
+    - Collection of tables and viws. 
+    - Access control set at dataset level.
+  - Tables:
+    - Supports scalar and nested structures.
+    - Stored in columnar format.
+    - Partitioning.
+  - Views:
+    - Projection of one or more tables.
+    - Tables can be joined.
+    - Views can be materialized.
+  - Array type:
+    - Arrays:
+      - Ordered list of zero or more elements of non-arrays values. 
+      - Arrays os arrys are not allowed.
+      - Arrays of struct are allowed.
+  - Struct type:
+    - Container of ordered fields each with a type and name. 
+
+- Data Access Controls:;
+  - Access control applied at:
+    - organization or project level.
+    - dataset level. 
+    - table or view. 
+  - Predefined IAM Roles:
+    - BQ Admin.
+    - BQ Owner/Editor/Viewer.
+    - BQ Resource Admin/Editor/Viewer.
+    - BQ User.
+    - BQ Job User.
+  - Column level security.
+    - Restrict access to sensitive info in a table.
+    - Taxonomy of tags in data catalog.
+    - Tags assigned to columns in BQ.
+    - Use IAM roles to restrict access to each policy tag.
+  - Basic roles:
+    - Exist prior to IAM.
+
+- Partitioned tables:
+  - Table is divided into segments called partitions.
+  - Improves query performance.
+  - Lowers cost.
+  - Partition by ingestion time:
+    - Loads data into daily, date-based partitions.
+    - Automatically creates new partitions.
+    - Uses ingestion time to determine partition.
+    - Create pseudo-column_PARTITIONTIME
+      - Date-based timestamp.
+      - Used in queries to limit the number of partitions scanned.
+  - Date/Timestamp partitioning:
+    - Partition based on date or timestamp column.
+    - Each partition holds one time unit of data where time unit is hour, day, month etc.
+  - Special partitions:
+    - __ NULL __ when nulls in partition column.
+    - __ UNPARTITIONED __ when values in column outside allowed range. 
+  - Integer Range Partitioning:
+    - Use separate a column with integer value.
+    - Specify start and end of the range.
+    - Interval of each partition in the range. 
+    - Values outside the range to the UNPARTITIONED partition.
+  - Date/Timestamp partitioning vs Sharding:
+    - Use separate tables for each day.
+    - TABLE_NAME_PREFIX_YYMMDD.
+    - Use UNION in queries to scan multiple tables. 
+  - Partitioning is preferred over sharding.
+    - Less metadata to maintain.
+    - Less permission checking overhead.
+    - Better performance.
+
+- Clustered Tables:
+  - Data sorted based on values in one or more columns. 
+  - Can improve performance of aggregate queries.
+  - Can reduce scanning when cluster columns used in WHERE clause.
+  - Use clustering when:
+    - Table is partitioned.
+    - Unpartitioned tables cannot be clustered.
+    - Commonly use filters or aggregations against the cluster columns. 
+  - BQ automatically re-clusters in the background.
+
+- Load Data Sources
+  - Cloud Storage.
+  - Other Google services.
+  - Local Machine.
+  - Streaming inserts.
+  - DML bulk loads.
+  - Cloud Dataflow.
+  - BQ command line, API and GUI. 
+  - Avro is preferred format.
+
 #### **Instance Store**
 
 - Persistent Disk
