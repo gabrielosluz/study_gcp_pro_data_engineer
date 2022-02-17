@@ -531,4 +531,16 @@ Read: https://cloud.google.com/architecture/dw2bq/dw-bq-migration-overview
   - Two editions:
     - Basic.
     - Enterprese. 
-    
+
+###### **Cloud PUB/SUB and Data Pipelines**
+
+- Cloud Pub/Sub:
+  - Message service. 
+  - Queue.
+  - Topic and subscription.
+  - Topics is a struct for storing messages. 
+  - Subsscription enables application to read messages in queue. 
+  
+
+
+
